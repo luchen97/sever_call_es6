@@ -1,7 +1,7 @@
 import * as os from "os";
 
 const config = {
-  listenIp: "192.168.1.26",
+  listenIp: "103.237.144.205",
   listenPort: 3017,
   sslCrt: "./ssl/cert.pem",
   sslKey: "./ssl/key.pem",
@@ -50,8 +50,8 @@ const config = {
     webRtcTransport: {
       listenIps: [
         {
-          ip: "192.168.1.26",
-          announcedIp: "192.168.1.26", // replace by public IP address
+          ip: "103.237.144.205",
+          announcedIp: "103.237.144.205", // replace by public IP address
         },
       ],
       maxIncomingBitrate: 1500000,
