@@ -9,7 +9,7 @@ import { getMediasoupWorker } from "../workerManager";
 const initSocketServer = (httpsServer: any) => {
   const io = new Server(httpsServer, {
     allowEIO3: true,
-    cors: { origin: "http://192.168.1.19:3000", credentials: true },
+    cors: { origin: "http://telerad.vn:444", credentials: true },
   });
 
   io.on(EVENTS.SOCKET_CONNECTION, (socket: any) => {
