@@ -9,7 +9,7 @@ import { getMediasoupWorker } from "../workerManager";
 const initSocketServer = (httpsServer: any) => {
   const io = new Server(httpsServer, {
     allowEIO3: true,
-    // cors: { origin: "https://192.168.1.19:3000", credentials: true },
+    cors: { origin: "http://192.168.1.19:3000", credentials: true },
   });
 
   io.on(EVENTS.SOCKET_CONNECTION, (socket: any) => {
@@ -83,7 +83,52 @@ const initSocketServer = (httpsServer: any) => {
     socket.on(RTC_EVENTS.CREATE_CONSUME, (data: any, callback: Function) =>
       onCreateConsume(socket, data, callback)
     );
+    socket.on(
+      RTC_EVENTS.GET_PRODUCER_OF_USER_KEY,
+      (data: any, callback: Function) =>
+        onGetProducerOfuserKey(socket, data, callback)
+    );
   });
+};
+
+const onGetProducerOfuserKey = (socket: any, data: any, callback: Function) => {
+  const { roomname, id } = socket;
+  const room: Room = roomList.get(roomname);
+  const user:any = Array.from(room.listUser.values()).filter((user: User) => {
+    if (user.isKey) {
+      return user;
+    }
+  })[0];
+
+  console.log(user)
+
+  if (!roomList.has(roomname)) {
+    const message = "Room not found!";
+    const reponse: IResponse = {
+      status: 0,
+      message,
+      data: null,
+    };
+    console.log(message);
+    return callback(reponse);
+  } else {
+    const producerList: any = [];
+    user.producers.forEach((producer: any) => {
+      producerList.push({
+        producer_id: producer.id,
+        peerName: user.username,
+        peerId: user.socketId,
+      });
+    });
+    const message = "User key producer get success!";
+    const reponse: IResponse = {
+      status: 1,
+      message,
+      data: producerList,
+    };
+    console.log(message);
+    return callback(reponse);
+  }
 };
 
 const onCreateRoom = (
@@ -145,7 +190,10 @@ const onJoinRoom = (
       return callback(reponse);
     } else {
       const message = `user ${username} join room ${room.name} success!`;
-      const user: User = new User(io, socket.id, username);
+      const user: User = new User(io, socket.id, username, false);
+      if (room.listUser.size === 0) {
+        user.isKey = true;
+      }
       room.addUser(user);
       socket.roomname = roomname;
       const reponse: IResponse = {
@@ -203,6 +251,7 @@ const onUserDisconnect = async (socket: any) => {
   room.broadCast(id, EVENTS.SOCKET_USER_LEFT_ROOM, {
     name: user.username,
     id: user.socketId,
+    isKey:user.isKey
   });
   if (room.listUser.size === 0) {
     roomList.delete(roomname);
@@ -226,6 +275,10 @@ const onExitRoom = async (socket: any, data: any, callback: Function) => {
   const room: Room = roomList.get(roomname);
   const user: User = room.listUser.get(id);
   await room.removeUser(user.socketId);
+ 
+  if (user.isKey) {
+    roomList.delete(roomname);
+  }
   if (room.listUser.size === 0) {
     roomList.delete(roomname);
   }
@@ -344,6 +397,7 @@ const onCreateProduce = async (socket: any, data: any, callback: Function) => {
       producer_socket_id: id,
       peerName: user.username,
       peerId: user.socketId,
+      isKey:user.isKey
     },
   ]);
   const message = `Producer create success!`;
@@ -471,8 +525,8 @@ const onSendMessage = (socket: any, message: any, callback: Function) => {
   room.addMessage(socket.id, message);
 };
 
-const onCheckRoomAlready=(data:any, callback:Function)=>{
-  console.log(data)
+const onCheckRoomAlready = (data: any, callback: Function) => {
+  console.log(data);
   if (roomList.has(data.roomname)) {
     const message = `Room already exist!`;
     const reponse: IResponse = {
@@ -480,16 +534,16 @@ const onCheckRoomAlready=(data:any, callback:Function)=>{
       message,
       data: true,
     };
-    callback(reponse)
-  }else{
+    callback(reponse);
+  } else {
     const message = `Room is null!`;
     const reponse: IResponse = {
       status: 1,
       message,
       data: false,
     };
-    callback(reponse)
+    callback(reponse);
   }
-}
+};
 
 export { initSocketServer };

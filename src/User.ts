@@ -1,5 +1,6 @@
 import { config } from "./config";
 import { RTC_EVENTS } from "./events/event";
+import { roomList } from "./roomManager";
 
 class User {
   io: any;
@@ -8,10 +9,12 @@ class User {
   consumers: any;
   producers: any;
   username: string;
-  constructor(io: any, socketId: string, username: string) {
+  isKey: boolean;
+  constructor(io: any, socketId: string, username: string,isKey:boolean) {
     this.io = io;
     this.socketId = socketId;
     this.username = username;
+    this.isKey=isKey;
     this.transports = new Map();
     this.consumers = new Map();
     this.producers = new Map();
@@ -90,6 +93,7 @@ class User {
       return;
     }
 
+
     if (consumer.type === "simulcast") {
       await consumer.setPreferredLayers({
         spatialLayer: 2,
@@ -110,8 +114,6 @@ class User {
       // // tell client consumer is dead
       this.io.to(this.socketId).emit(RTC_EVENTS.CLOSE_CONSUME, {
         consumerId: consumer.id,
-        peerId: this.socketId,
-        peerName: this.username,
       });
     });
 
@@ -129,6 +131,7 @@ class User {
   };
 
   closeProducer = (producerId: string) => {
+    console.log(producerId,this.producers)
     try {
       this.producers.get(producerId).close();
     } catch (e) {

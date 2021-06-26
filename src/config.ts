@@ -1,7 +1,8 @@
 import * as os from "os";
 
 const config = {
-  listenIp: "103.237.144.205",
+  // listenIp: "103.237.144.205",
+  listenIp: "192.168.1.26",
   listenPort: 3017,
   sslCrt: "./ssl/cert.pem",
   sslKey: "./ssl/key.pem",
@@ -20,11 +21,11 @@ const config = {
         "rtp",
         "srtp",
         "rtcp",
-        // 'rtx',
-        // 'bwe',
-        // 'score',
-        // 'simulcast',
-        // 'svc'
+        'rtx',
+        'bwe',
+        'score',
+        'simulcast',
+        'svc'
       ],
     },
     // Router settings
@@ -50,12 +51,14 @@ const config = {
     webRtcTransport: {
       listenIps: [
         {
-          ip: "103.237.144.205",
-          announcedIp: "103.237.144.205", // replace by public IP address
+          // ip: "103.237.144.205",
+          // announcedIp: "103.237.144.205", // replace by public IP address
+          ip: "192.168.1.26",
+          announcedIp: "192.168.1.26", // replace by public IP address
         },
       ],
-      maxIncomingBitrate: 1500000,
-      initialAvailableOutgoingBitrate: 1000000,
+      maxIncomingBitrate: 150000,
+      initialAvailableOutgoingBitrate: 150000
     },
   },
 };

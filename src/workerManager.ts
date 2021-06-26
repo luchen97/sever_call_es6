@@ -9,12 +9,12 @@ const initWorker = async () => {
     const { numWorkers } = config.mediasoup;
 
     for (let i = 0; i < numWorkers; i++) {
-      const workerconfig:any={
+      const workerconfig: any = {
         logLevel: config.mediasoup.worker.logLevel,
         logTags: config.mediasoup.worker.logTags,
         rtcMinPort: config.mediasoup.worker.rtcMinPort,
         rtcMaxPort: config.mediasoup.worker.rtcMaxPort,
-      }
+      };
       let worker = await mediasoup.createWorker(workerconfig);
 
       // worker.on("died", () => {
@@ -24,6 +24,15 @@ const initWorker = async () => {
       //   );
       //   setTimeout(() => process.exit(1), 2000);
       // });
+      // setInterval(async () => {
+      //   const usage = await worker.getResourceUsage();
+
+      //   console.log(
+      //     "mediasoup Worker resource usage [pid:%d]: %o",
+      //     worker.pid,
+      //     usage
+      //   );
+      // }, 12000);
       workers.push(worker);
     }
   } catch (error) {

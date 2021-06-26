@@ -3,6 +3,7 @@ import { ETransportState, EVENTS, TRANSPORT_EVENTS } from "./events/event";
 import { User } from "./User";
 
 class Room {
+  userKey:User;
   router: any;
   listUser: any;
   password: string;
@@ -13,6 +14,7 @@ class Room {
   userOnRoom: Array<any>;
   constructor(name: string, password: string, worker: any, io: string) {
     this.router = null;
+    this.userKey=null;
     this.listUser = new Map();
     this.userOnRoom = [];
     this.password = password;
@@ -100,16 +102,15 @@ class Room {
   getProducerListForPeer(socketId: string) {
     const producerList: any = [];
     this.listUser.forEach((user: User) => {
-      console.log("producers", user.producers.size);
       user.producers.forEach((producer: any) => {
         producerList.push({
           producer_id: producer.id,
           peerName: user.username,
           peerId: user.socketId,
+          isKey:user.isKey
         });
       });
     });
-    console.log(producerList);
     return producerList;
   }
 
