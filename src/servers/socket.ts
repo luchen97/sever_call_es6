@@ -113,6 +113,16 @@ const onGetProducerOfuserKey = (socket: any, data: any, callback: Function) => {
     return callback(reponse);
   } else {
     const producerList: any = [];
+    if (!user) {
+      const message = "User not found!";
+      const reponse: IResponse = {
+        status: 0,
+        message,
+        data: null,
+      };
+      console.log(message);
+      return callback(reponse);
+    }
     user.producers.forEach((producer: any) => {
       producerList.push({
         producer_id: producer.id,
