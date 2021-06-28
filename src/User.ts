@@ -131,7 +131,9 @@ class User {
   };
 
   closeProducer = (producerId: string) => {
-    console.log(producerId,this.producers)
+    if (!producerId||!this.producers) {
+      return
+    }
     try {
       this.producers.get(producerId).close();
     } catch (e) {
