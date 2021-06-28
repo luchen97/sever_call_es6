@@ -17,13 +17,13 @@ const initWorker = async () => {
       };
       let worker = await mediasoup.createWorker(workerconfig);
 
-      // worker.on("died", () => {
-      //   console.error(
-      //     "mediasoup worker died, exiting in 2 seconds... [pid:%d]",
-      //     worker.pid
-      //   );
-      //   setTimeout(() => process.exit(1), 2000);
-      // });
+      worker.on("died", () => {
+        console.error(
+          "mediasoup worker died, exiting in 2 seconds... [pid:%d]",
+          worker.pid
+        );
+        setTimeout(() => process.exit(1), 2000);
+      });
       // setInterval(async () => {
       //   const usage = await worker.getResourceUsage();
 

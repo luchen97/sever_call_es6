@@ -13,7 +13,7 @@ const config = {
     worker: {
       rtcMinPort: 10000,
       rtcMaxPort: 10100,
-      logLevel: "warn",
+      logLevel: "debug",
       logTags: [
         "info",
         "ice",
@@ -21,11 +21,11 @@ const config = {
         "rtp",
         "srtp",
         "rtcp",
-        'rtx',
-        'bwe',
-        'score',
-        'simulcast',
-        'svc'
+        "rtx",
+        "bwe",
+        "score",
+        "simulcast",
+        "svc",
       ],
     },
     // Router settings
@@ -45,6 +45,37 @@ const config = {
             "x-google-start-bitrate": 1000,
           },
         },
+        {
+          kind: "video",
+          mimeType: "video/VP9",
+          clockRate: 90000,
+          parameters: {
+            "profile-id": 2,
+            "x-google-start-bitrate": 1000,
+          },
+        },
+        {
+          kind: "video",
+          mimeType: "video/h264",
+          clockRate: 90000,
+          parameters: {
+            "packetization-mode": 1,
+            "profile-level-id": "4d0032",
+            "level-asymmetry-allowed": 1,
+            "x-google-start-bitrate": 1000,
+          },
+        },
+        {
+          kind: "video",
+          mimeType: "video/h264",
+          clockRate: 90000,
+          parameters: {
+            "packetization-mode": 1,
+            "profile-level-id": "42e01f",
+            "level-asymmetry-allowed": 1,
+            "x-google-start-bitrate": 1000,
+          },
+        },
       ],
     },
     // WebRtcTransport settings
@@ -57,8 +88,9 @@ const config = {
           // announcedIp: "192.168.1.26", // replace by public IP address
         },
       ],
+      initialAvailableOutgoingBitrate: 1000000,
+      minimumAvailableOutgoingBitrate: 600000,
       maxIncomingBitrate: 1500000,
-      initialAvailableOutgoingBitrate: 1500000
     },
   },
 };
