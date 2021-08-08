@@ -8,6 +8,8 @@ import { createProducerController } from "../controllers/Room/CreateProducer";
 import { createRoomController } from "../controllers/Room/CreateRoom";
 import { createTransportController } from "../controllers/Room/CreateTransport";
 import { exitRoomController } from "../controllers/Room/ExitRoom";
+import { getConsumerUserController } from "../controllers/Room/GetConsumerUser";
+import { getKeyUserController } from "../controllers/Room/GetKeyUser";
 import { getMessageInRoomController } from "../controllers/Room/GetMessageInRoom";
 import { getProducerInRoomController } from "../controllers/Room/GetProducerInRoom";
 import { getRoomInfoController } from "../controllers/Room/GetRoomInfo";
@@ -33,5 +35,7 @@ routers.post("/changeRoomPassword", changeRoomPasswordController);
 routers.post("/getMessageInRoom", getMessageInRoomController);
 routers.post("/sendMessage", sendMessageController);
 routers.post("/exitRoom", exitRoomController);
+routers.post("/getConsumerUser", getConsumerUserController);
+routers.post("/getKeyUser", getKeyUserController);
 
 export { routers };

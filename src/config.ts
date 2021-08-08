@@ -84,8 +84,8 @@ const config = {
         {
           ip: "103.237.144.205",
           announcedIp: "103.237.144.205", // replace by public IP address
-          // ip: "192.168.1.26",
-          // announcedIp: "192.168.1.26", // replace by public IP address
+          // ip: "192.168.0.105",
+          // announcedIp: "192.168.0.105", // replace by public IP address
         },
       ],
       initialAvailableOutgoingBitrate: 1000000,
