@@ -61,8 +61,8 @@ class User {
     let producer = await this.transports.get(producerTransportId).produce({
       kind,
       rtpParameters,
-    });
-
+      });
+console.log(producer)
     this.producers.set(producer.id, producer);
 
     producer.on("transportclose", () => {

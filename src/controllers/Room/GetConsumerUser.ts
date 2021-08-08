@@ -6,7 +6,7 @@ import { User } from "../../UserNew";
 
 const getConsumerUserController = async (req: any, res: any) => {
     const { roomname, userId, producerParams } = req.body;
-
+console.log(roomname,roomList)
     if (!roomList.has(roomname)) {
         const message = `not found user in room!`;
         const reponse: IResponse = {

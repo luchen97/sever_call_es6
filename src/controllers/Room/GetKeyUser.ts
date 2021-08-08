@@ -25,7 +25,8 @@ const getKeyUserController = async (req: any, res: any) => {
         if (user.isKey) {
             user.producers.forEach((producer: any) => {
                 listProducer.push({
-                    producerId: producer.id,
+		producerId: producer.id,
+		producerType:producer._data.kind
                 });
             });
             listResponse.push({
