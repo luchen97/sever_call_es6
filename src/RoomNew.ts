@@ -40,9 +40,7 @@ class Room {
     getProducerListForPeer() {
         const producerList: any = [];
         this.listUser.forEach((user: User) => {
-            console.log("vaoooooo",user.username)
             user.producers.forEach((producer: any) => {
-                console.log(user.username);
                 producerList.push({
                     producerId: producer.id,
                     peername: user.username,

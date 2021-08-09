@@ -6,7 +6,7 @@ import { User } from "../../UserNew";
 
 const getConsumerUserController = async (req: any, res: any) => {
     const { roomname, userId, producerParams } = req.body;
-console.log(roomname,roomList)
+    console.log(roomname,"getConsumerUserController");
     if (!roomList.has(roomname)) {
         const message = `not found user in room!`;
         const reponse: IResponse = {
@@ -26,6 +26,7 @@ console.log(roomname,roomList)
             user.producers.forEach((producer: any) => {
                 listProducer.push({
                     producerId: producer.id,
+                    producerType: producer._data.kind,
                 });
             });
             listResponse.push({
@@ -34,7 +35,6 @@ console.log(roomname,roomList)
                 listProducer,
             });
         }
-       
     });
 
     const message = `ok!`;

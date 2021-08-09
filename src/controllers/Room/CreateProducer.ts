@@ -36,13 +36,7 @@ const createProducerController = async (req: any, res: any) => {
             peerId: user.socketId,
             isKey: user.isKey,
         });
-        console.log({
-            producer_id: producer.id,
-            producer_socket_id: user.socketId,
-            peerName: user.username,
-            peerId: user.socketId,
-            isKey: user.isKey,
-        })
+     
         const message = `create producer success!`;
         const reponse: IResponse = {
             status: 1,

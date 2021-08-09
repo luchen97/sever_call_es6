@@ -10,7 +10,6 @@ const joinRoomController = async (req: any, res: any) => {
     const password = req.body.password;
     const userId = req.body.userId;
     const username = req.body.username;
-    console.log("vaoday",username)
     const user = new User(userId, username, false);
     if (!roomList.has(roomname)) {
         const message = "Room not found!";
