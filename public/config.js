@@ -1,2 +1,2 @@
-window.serverIp = "103.237.144.205"
+window.serverIp = "vnpacs.com"
 window.port = 3018
